@@ -5,15 +5,15 @@ void main() {
     String[] row3 = {"⬜", "⬜", "⬜", "⬜"};
     String[] row4 = {"⬜", "⬜", "⬜", "⬜"};
     String[][] board = {row1, row2, row3, row4};
+    //                            row, col
     int[] playerCord = new int[] {0, 0};
-    int nextRow = 0;
-    int nextCol = 0;
+
 
     String action = "p";
-    play(action, board, playerCord, nextRow, nextCol);
+    play(action, board, playerCord);
 }
 
-public void play(String act, String[][] box, int[] pos, int nextRow, int nextCol) {
+public void play(String act, String[][] box, int[] pos) {
     while (!act.equals("x") && !act.equals("X")) {
         showBoard(box);
         Direction currDirection = Direction.UP;
@@ -22,22 +22,18 @@ public void play(String act, String[][] box, int[] pos, int nextRow, int nextCol
         switch (act.toUpperCase()) {
             case "W", "S" -> {
                 if (act.equals("w") || act.equals("W")) {
-                    currDirection = Direction.UP;
-                    box = posSwap(box, currDirection, nextRow, nextCol);
+                    posSwap(box, currDirection, pos);
                 }
                 else {
-                    currDirection = Direction.DOWN;
-                    box = posSwap(box, currDirection, nextRow, nextCol);
+                    posSwap(box, currDirection = Direction.DOWN, pos);
                 }
             }
             case "A", "D" -> {
                 if (act.equals("a") || act.equals("A")) {
-                    currDirection = Direction.LEFT;
-                    box = posSwap(box, currDirection, nextRow, nextCol);
+                    posSwap(box, currDirection = Direction.LEFT, pos);
                 }
                 else {
-                    currDirection = Direction.RIGHT;
-                    box = posSwap(box, currDirection, nextRow, nextCol);
+                    posSwap(box, currDirection = Direction.RIGHT, pos);
                 }
             }
             case "X" -> {IO.println("See ya!"); return;}
@@ -53,40 +49,46 @@ public enum Direction {
 }
 
 public void showBoard(String[][] box) {
-    for (String[] row : box) {IO.println(Arrays.toString(row));}
+
+    for (String[] row : box) {
+        for (String block : row) {
+            IO.print(block);
+        }
+        IO.println("");
+    }
 }
 
-public String[][] posSwap(String[][] arr, Direction direct, int nextRow, int nextCol) {
+public void posSwap(String[][] arr, Direction direct, int[] pos) {
     switch (direct) {
         case Direction.UP -> {
-            if (nextRow == 0) {return arr;}
-            int temp = nextRow;
-            nextRow--;
-            arr[nextRow][nextCol] = "⬛";
-            arr[temp][nextCol] = "⬜";
+            if (pos[0] == 0) {return;}
+            int temp = pos[0];
+            pos[0]--;
+            arr[pos[0]][pos[1]] = "⬛";
+            arr[temp][pos[1]] = "⬜";
         }
         case Direction.DOWN -> {
-            if (nextRow == 3) {return arr;}
-            int temp = nextRow;
-            nextRow++;
-            arr[nextRow][nextCol] = "⬛";
-            arr[temp][nextCol] = "⬜";
+            if (pos[0] == 3) {return;}
+            int temp = pos[0];
+            pos[0]++;
+            arr[pos[0]][pos[1]] = "⬛";
+            arr[temp][pos[1]] = "⬜";
         }
         case Direction.LEFT -> {
-            if (nextRow == 0) {return arr;}
-            int temp = nextCol;
-            nextCol--;
-            arr[nextRow][nextCol] = "⬛";
-            arr[nextRow][temp] = "⬜";
+            if (pos[1] == 0) {return;}
+            int temp = pos[1];
+            pos[1]--;
+            arr[pos[0]][pos[1]] = "⬛";
+            arr[pos[0]][temp] = "⬜";
         }
         case Direction.RIGHT -> {
-            if (nextRow == 3) {return arr;}
-            int temp = nextCol;
-            nextCol++;
-            arr[nextRow][nextCol] = "⬛";
-            arr[nextRow][temp] = "⬜";
+            if (pos[1] == 3) {return;}
+            int temp = pos[1];
+            pos[1]++;
+            arr[pos[0]][pos[1]] = "⬛";
+            arr[pos[0]][temp] = "⬜";
         }
     }
-    return arr;
+    return;
 
 }
