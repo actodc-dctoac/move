@@ -16,7 +16,6 @@ void main() {
 public void play(String act, String[][] box, int[] pos, int nextRow, int nextCol) {
     while (!act.equals("x") && !act.equals("X")) {
         showBoard(box);
-        //TODO: Implement showBoard and posSwap
         Direction currDirection = Direction.UP;
         IO.println("WASD to move, X to exit!");
         act = IO.readln();
