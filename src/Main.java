@@ -7,7 +7,7 @@ void main() {
     String[][] board = {row0, row1, row2, row3};
 
     int[] playerCord = new int[] {0, 0}; //x, y
-
+    //TODO: Randomly initiate enemy and coin position
 
     String action = "p";
     play(action, board, playerCord);
@@ -53,6 +53,7 @@ public void showBoard(String[][] box) {
         for (String block : row) {
             IO.print(block);
         }
+        //TODO: Display Score
         IO.println("");
     }
 }
@@ -88,6 +89,9 @@ public void posSwap(String[][] arr, Direction direct, int[] pos) {
             arr[pos[0]][temp] = "⬜";
         }
     }
+    //TODO: Check for coin and enemy overlap
+    //TODO: Move enemy 1 square randomly if no enemy overlap
+    //TODO: Add 1 to score if coin overlap and generate new randomly placed coin in unoccupied position
     return;
 
 }
