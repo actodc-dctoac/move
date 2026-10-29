@@ -1,12 +1,12 @@
 void main() {
     //Setting up board, player position, and current player action
-    String[] row1 = {"⬛", "⬜", "⬜", "⬜"};
+    String[] row0 = {"⬛", "⬜", "⬜", "⬜"};
+    String[] row1 = {"⬜", "⬜", "⬜", "⬜"};
     String[] row2 = {"⬜", "⬜", "⬜", "⬜"};
     String[] row3 = {"⬜", "⬜", "⬜", "⬜"};
-    String[] row4 = {"⬜", "⬜", "⬜", "⬜"};
-    String[][] board = {row1, row2, row3, row4};
-    //                            row, col
-    int[] playerCord = new int[] {0, 0};
+    String[][] board = {row0, row1, row2, row3};
+
+    int[] playerCord = new int[] {0, 0}; //x, y
 
 
     String action = "p";
@@ -16,24 +16,23 @@ void main() {
 public void play(String act, String[][] box, int[] pos) {
     while (!act.equals("x") && !act.equals("X")) {
         showBoard(box);
-        Direction currDirection = Direction.UP;
         IO.println("WASD to move, X to exit!");
         act = IO.readln();
         switch (act.toUpperCase()) {
             case "W", "S" -> {
                 if (act.equals("w") || act.equals("W")) {
-                    posSwap(box, currDirection, pos);
+                    posSwap(box, Direction.UP, pos);
                 }
                 else {
-                    posSwap(box, currDirection = Direction.DOWN, pos);
+                    posSwap(box, Direction.DOWN, pos);
                 }
             }
             case "A", "D" -> {
                 if (act.equals("a") || act.equals("A")) {
-                    posSwap(box, currDirection = Direction.LEFT, pos);
+                    posSwap(box, Direction.LEFT, pos);
                 }
                 else {
-                    posSwap(box, currDirection = Direction.RIGHT, pos);
+                    posSwap(box, Direction.RIGHT, pos);
                 }
             }
             case "X" -> {IO.println("See ya!"); return;}
