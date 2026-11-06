@@ -9,8 +9,7 @@ void main() {
     int[] playerCord = new int[] {0, 0}; //x, y
     //TODO: Randomly initiate enemy and coin position
 
-    String action = "p";
-    play(action, board, playerCord);
+    play("", board, playerCord);
 }
 
 public void play(String act, String[][] box, int[] pos) {
