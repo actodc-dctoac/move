@@ -7,40 +7,26 @@ void main() {
     String[][] board = {row0, row1, row2, row3};
 
     int[] playerCord = new int[] {0, 0}; //x, y
-    //TODO: Randomly initiate enemy and coin position
+    //TODO: Randomly initiate enemy and coin position, probably without having the player, the enemy, and/or coin
+    // position overlap.
 
-    String action = "p";
-    play(action, board, playerCord);
+    play("", board, playerCord);
 }
 
 public void play(String act, String[][] box, int[] pos) {
     while (!act.equals("x") && !act.equals("X")) {
         showBoard(box);
         IO.println("WASD to move, X to exit!");
-        act = IO.readln();
-        switch (act.toUpperCase()) {
-            case "W", "S" -> {
-                if (act.equals("w") || act.equals("W")) {
-                    posSwap(box, Direction.UP, pos);
-                }
-                else {
-                    posSwap(box, Direction.DOWN, pos);
-                }
-            }
-            case "A", "D" -> {
-                if (act.equals("a") || act.equals("A")) {
-                    posSwap(box, Direction.LEFT, pos);
-                }
-                else {
-                    posSwap(box, Direction.RIGHT, pos);
-                }
-            }
-            case "X" -> {IO.println("See ya!"); return;}
-            default -> {IO.println("Not In Input List...");}
-
+        act = IO.readln().toUpperCase();
+        switch (act) {
+            case "W" -> posSwap(box, Direction.UP, pos);
+            case "S" -> posSwap(box, Direction.DOWN, pos);
+            case "A" -> posSwap(box, Direction.LEFT, pos);
+            case "D" -> posSwap(box, Direction.RIGHT, pos);
+            case "X" -> IO.println("See ya!");
+            default -> IO.println("Not In Input List...");
         }
     }
-    return;
 }
 
 public enum Direction {
@@ -53,45 +39,37 @@ public void showBoard(String[][] box) {
         for (String block : row) {
             IO.print(block);
         }
-        //TODO: Display Score
+        //TODO: Display Score. Might want to make a player object that keeps track of their position and score.
         IO.println("");
     }
 }
 
 public void posSwap(String[][] arr, Direction direct, int[] pos) {
     switch (direct) {
-        case Direction.UP -> {
+        case UP -> {
             if (pos[0] == 0) {return;}
-            int temp = pos[0];
             pos[0]--;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[temp][pos[1]] = "⬜";
+            arr[pos[0] + 1][pos[1]] = "⬜";
         }
-        case Direction.DOWN -> {
-            if (pos[0] == 3) {return;}
-            int temp = pos[0];
+        case DOWN -> {
+            if (pos[0] == arr.length - 1) {return;}
             pos[0]++;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[temp][pos[1]] = "⬜";
+            arr[pos[0] - 1][pos[1]] = "⬜";
         }
-        case Direction.LEFT -> {
+        case LEFT -> {
             if (pos[1] == 0) {return;}
-            int temp = pos[1];
             pos[1]--;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[pos[0]][temp] = "⬜";
+            arr[pos[0]][pos[1] + 1] = "⬜";
         }
-        case Direction.RIGHT -> {
-            if (pos[1] == 3) {return;}
-            int temp = pos[1];
+        case RIGHT -> {
+            if (pos[1] == arr.length - 1) {return;}
             pos[1]++;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[pos[0]][temp] = "⬜";
+            arr[pos[0]][pos[1] - 1] = "⬜";
         }
     }
+    arr[pos[0]][pos[1]] = "⬛";
     //TODO: Check for coin and enemy overlap
     //TODO: Move enemy 1 square randomly if no enemy overlap
     //TODO: Add 1 to score if coin overlap and generate new randomly placed coin in unoccupied position
-    return;
-
+	
 }
