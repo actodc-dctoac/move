@@ -47,33 +47,26 @@ public void posSwap(String[][] arr, Direction direct, int[] pos) {
     switch (direct) {
         case UP -> {
             if (pos[0] == 0) {return;}
-            int temp = pos[0];
             pos[0]--;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[temp][pos[1]] = "⬜";
+            arr[pos[0] + 1][pos[1]] = "⬜";
         }
         case DOWN -> {
-            if (pos[0] == 3) {return;}
-            int temp = pos[0];
+            if (pos[0] == arr.length - 1) {return;}
             pos[0]++;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[temp][pos[1]] = "⬜";
+            arr[pos[0] - 1][pos[1]] = "⬜";
         }
         case LEFT -> {
             if (pos[1] == 0) {return;}
-            int temp = pos[1];
             pos[1]--;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[pos[0]][temp] = "⬜";
+            arr[pos[0]][pos[1] + 1] = "⬜";
         }
         case RIGHT -> {
-            if (pos[1] == 3) {return;}
-            int temp = pos[1];
+            if (pos[1] == arr.length - 1) {return;}
             pos[1]++;
-            arr[pos[0]][pos[1]] = "⬛";
-            arr[pos[0]][temp] = "⬜";
+            arr[pos[0]][pos[1] - 1] = "⬜";
         }
     }
+    arr[pos[0]][pos[1]] = "⬛";
     //TODO: Check for coin and enemy overlap
     //TODO: Move enemy 1 square randomly if no enemy overlap
     //TODO: Add 1 to score if coin overlap and generate new randomly placed coin in unoccupied position
