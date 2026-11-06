@@ -17,27 +17,14 @@ public void play(String act, String[][] box, int[] pos) {
     while (!act.equals("x") && !act.equals("X")) {
         showBoard(box);
         IO.println("WASD to move, X to exit!");
-        act = IO.readln();
+        act = IO.readln().toUpperCase();
         switch (act.toUpperCase()) {
-            case "W", "S" -> {
-                if (act.equals("w") || act.equals("W")) {
-                    posSwap(box, Direction.UP, pos);
-                }
-                else {
-                    posSwap(box, Direction.DOWN, pos);
-                }
-            }
-            case "A", "D" -> {
-                if (act.equals("a") || act.equals("A")) {
-                    posSwap(box, Direction.LEFT, pos);
-                }
-                else {
-                    posSwap(box, Direction.RIGHT, pos);
-                }
-            }
-            case "X" -> {IO.println("See ya!"); return;}
-            default -> {IO.println("Not In Input List...");}
-
+            case "W" -> posSwap(box, Direction.UP, pos);
+            case "S" -> posSwap(box, Direction.DOWN, pos);
+            case "A" -> posSwap(box, Direction.LEFT, pos);
+            case "D" -> posSwap(box, Direction.RIGHT, pos);
+            case "X" -> IO.println("See ya!");
+            default -> IO.println("Not In Input List...");
         }
     }
 }
