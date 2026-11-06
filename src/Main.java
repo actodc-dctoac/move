@@ -40,7 +40,6 @@ public void play(String act, String[][] box, int[] pos) {
 
         }
     }
-    return;
 }
 
 public enum Direction {
@@ -92,6 +91,5 @@ public void posSwap(String[][] arr, Direction direct, int[] pos) {
     //TODO: Check for coin and enemy overlap
     //TODO: Move enemy 1 square randomly if no enemy overlap
     //TODO: Add 1 to score if coin overlap and generate new randomly placed coin in unoccupied position
-    return;
-
+	
 }
