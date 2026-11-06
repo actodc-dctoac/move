@@ -7,7 +7,8 @@ void main() {
     String[][] board = {row0, row1, row2, row3};
 
     int[] playerCord = new int[] {0, 0}; //x, y
-    //TODO: Randomly initiate enemy and coin position
+    //TODO: Randomly initiate enemy and coin position, probably without having the player, the enemy, and/or coin
+    // position overlap.
 
     play("", board, playerCord);
 }
@@ -38,7 +39,7 @@ public void showBoard(String[][] box) {
         for (String block : row) {
             IO.print(block);
         }
-        //TODO: Display Score
+        //TODO: Display Score. Might want to make a player object that keeps track of their position and score.
         IO.println("");
     }
 }
