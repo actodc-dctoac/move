@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.Arrays;
+import java.util.HashSet;
 void main() {
     //Setting up board, player position, and current player action
     String[] row0 = {"⬛", "⬜", "⬜", "⬜"};
@@ -5,69 +8,48 @@ void main() {
     String[] row2 = {"⬜", "⬜", "⬜", "⬜"};
     String[] row3 = {"⬜", "⬜", "⬜", "⬜"};
     String[][] board = {row0, row1, row2, row3};
+    HashSet<int[]> invalidPositions = new HashSet<>();
 
-    int[] playerCord = new int[] {0, 0}; //x, y
+    player player = new player(0, 0);
     //TODO: Randomly initiate enemy and coin position, probably without having the player, the enemy, and/or coin
     // position overlap.
 
-    play("", board, playerCord);
+    play("", board, player, invalidPositions);
 }
 
-public void play(String act, String[][] box, int[] pos) {
-    while (!act.equals("x") && !act.equals("X")) {
-        showBoard(box);
+public boolean play(String act, String[][] board, player player, HashSet<int[]> invalidPositions) {
+    while (true) {
+        showBoard(board, player);
         IO.println("WASD to move, X to exit!");
         act = IO.readln().toUpperCase();
         switch (act) {
-            case "W" -> posSwap(box, Direction.UP, pos);
-            case "S" -> posSwap(box, Direction.DOWN, pos);
-            case "A" -> posSwap(box, Direction.LEFT, pos);
-            case "D" -> posSwap(box, Direction.RIGHT, pos);
-            case "X" -> IO.println("See ya!");
+            board[player.getXPosition()][player.getYPosition()] = "⬜"; // Clear previous position
+            case "W" -> player.swap([player.getXPosition() - 1, player.getYPosition()], invalidPositions);
+            case "S" -> player.swap([player.getXPosition() + 1, player.getYPosition()], invalidPositions);
+            case "A" -> player.swap([player.getXPosition(), player.getYPosition() - 1], invalidPositions);
+            case "D" -> player.swap([player.getXPosition(), player.getYPosition() + 1], invalidPositions);
+            case "X" -> IO.println("See Ya!"); return false;
             default -> IO.println("Not In Input List...");
         }
+        renderBoard(board, player);
     }
 }
 
-public enum Direction {
-    LEFT, RIGHT, UP, DOWN
-}
-
-public void showBoard(String[][] box) {
+public void showBoard(String[][] box, player player) {
 
     for (String[] row : box) {
         for (String block : row) {
             IO.print(block);
         }
         //TODO: Display Score. Might want to make a player object that keeps track of their position and score.
-        IO.println("");
+        IO.println("Score: " + player.getScore());
     }
 }
 
-public void posSwap(String[][] arr, Direction direct, int[] pos) {
-    switch (direct) {
-        case UP -> {
-            if (pos[0] == 0) {return;}
-            pos[0]--;
-            arr[pos[0] + 1][pos[1]] = "⬜";
-        }
-        case DOWN -> {
-            if (pos[0] == arr.length - 1) {return;}
-            pos[0]++;
-            arr[pos[0] - 1][pos[1]] = "⬜";
-        }
-        case LEFT -> {
-            if (pos[1] == 0) {return;}
-            pos[1]--;
-            arr[pos[0]][pos[1] + 1] = "⬜";
-        }
-        case RIGHT -> {
-            if (pos[1] == arr.length - 1) {return;}
-            pos[1]++;
-            arr[pos[0]][pos[1] - 1] = "⬜";
-        }
-    }
-    arr[pos[0]][pos[1]] = "⬛";
+public void renderBoard(String [][] board, player player) {
+    board[player.getXPosition()][player.getYPosition()] = "⬛";
+
+
     //TODO: Check for coin and enemy overlap
     //TODO: Move enemy 1 square randomly if no enemy overlap
     //TODO: Add 1 to score if coin overlap and generate new randomly placed coin in unoccupied position
